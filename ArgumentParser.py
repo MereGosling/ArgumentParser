@@ -68,6 +68,8 @@ def Preprocess(ArgMap):
 # Only works if the argument list has been preprocessed.
 def ListArguments():
     if not preprocessed:
+        print ("--- OPTIONS ---")
+        print ("The argument list has not been preprocessed!")
         return
 
     print ("--- OPTIONS ---")
@@ -86,8 +88,8 @@ def GetValue(arg):
         return ""
 
     # Otherwise look on the fly.
-    for i, arg in enumerate(sys.argv):
-        if arg[1:].lower() == arg.lower():      # arg[1:] to ignore any '-' or '/' character.
+    for i, o in enumerate(sys.argv):
+        if o[1:].lower() == arg.lower():      # arg[1:] to ignore any '-' or '/' character.
             if len(sys.argv) <= i+1:
                 return ""
             return sys.argv[i+1]
@@ -104,8 +106,8 @@ def GetSwitch(arg):
         return False
 
     # Otherwise look on the fly.
-    for i, arg in enumerate(sys.argv):
-        if arg[1:].lower() == arg.lower():        # arg[1:] to ignore any '-' or '/' character.
+    for i, o in enumerate(sys.argv):
+        if o[1:].lower() == arg.lower():        # arg[1:] to ignore any '-' or '/' character.
             return True
 
     return False
