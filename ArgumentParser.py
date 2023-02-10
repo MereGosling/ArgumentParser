@@ -28,12 +28,14 @@ class Argument:
     Switch = False
     Value = ""
     Present = False
+    Callback = None
 
-    def __init__(self, Name, Aliases, Switch, Value = ""):
+    def __init__(self, Name, Aliases, Switch, Callback, Value = ""):
         self.Name = Name
         self.Aliases = Aliases
         self.Switch = Switch
         self.Value = Value
+        self.Callback = Callback
 
     def __str__(self):
         output = f"{self.Name}:\n\tSwitch:\t\t{self.Switch}\n\tPresent:\t{self.Present}\n\tAliases:\t{self.Aliases}"
@@ -41,7 +43,7 @@ class Argument:
         if not self.Switch:
             output = output + f"\n\tValue:\t\t'{self.Value}'"
 
-        return output  
+        return output
 
 ArgumentList = list()
 
@@ -68,9 +70,17 @@ def Preprocess(ArgMap):
                 if not arg.Switch:
                     arg.Value = x[1]
                 break
-    
+
     global preprocessed
     preprocessed = True
+
+    for i, arg in enumerate(ArgumentList):
+        if arg.Switch:
+            if arg.Present:
+                arg.Callback()
+        else:
+            arg.Callback(arg.Value)
+
 
 # List all our options.
 # Only works if the argument list has been preprocessed.
