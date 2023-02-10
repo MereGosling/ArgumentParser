@@ -25,16 +25,23 @@ preprocessed = False
 class Argument:
     Name = ""
     Aliases = list()
+    Switch = False
     Value = ""
     Present = False
 
-    def __init__(self, Name, Aliases, Value = ""):
+    def __init__(self, Name, Aliases, Switch, Value = ""):
         self.Name = Name
         self.Aliases = Aliases
+        self.Switch = Switch
         self.Value = Value
 
     def __str__(self):
-        return f"{self.Name}:\n\tValue:\t\t'{self.Value}'\n\tPresent:\t{self.Present}\n\tAliases:\t{self.Aliases}"
+        output = f"{self.Name}:\n\tSwitch:\t\t{self.Switch}\n\tPresent:\t{self.Present}\n\tAliases:\t{self.Aliases}"
+
+        if not self.Switch:
+            output = output + f"\n\tValue:\t\t'{self.Value}'"
+
+        return output  
 
 ArgumentList = list()
 
@@ -58,7 +65,8 @@ def Preprocess(ArgMap):
         for i, x in enumerate(SuppliedArg):
             if x[0] == arg.Name or x[0] in arg.Aliases:
                 arg.Present = True
-                arg.Value = x[1]
+                if not arg.Switch:
+                    arg.Value = x[1]
                 break
     
     global preprocessed
