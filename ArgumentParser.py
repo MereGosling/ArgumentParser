@@ -95,37 +95,3 @@ def ListArguments():
     for i, arg in enumerate(ArgumentList):
         print(arg)
         print()
-
-# Get the value of a given option. Returns <STRING>
-def GetValue(arg):
-    # If we have preprocessed the argument list, look in our preprocessed list.
-    if preprocessed:
-        for i, o in enumerate(ArgumentList):
-            if o.Name == arg:
-                return o.Value
-        return ""
-
-    # Otherwise look on the fly.
-    for i, o in enumerate(sys.argv):
-        if o[1:].lower() == arg.lower():      # arg[1:] to ignore any '-' or '/' character.
-            if len(sys.argv) <= i+1:
-                return ""
-            return sys.argv[i+1]
-
-    return ""
-
-# Get the value of a given switch. Returns <BOOL>
-def GetSwitch(arg):
-    # If we have preprocessed the argument list, look in our preprocessed list.
-    if preprocessed:
-        for i, o in enumerate(ArgumentList):
-            if o.Name == arg:
-                return o.Present
-        return False
-
-    # Otherwise look on the fly.
-    for i, o in enumerate(sys.argv):
-        if o[1:].lower() == arg.lower():        # arg[1:] to ignore any '-' or '/' character.
-            return True
-
-    return False
