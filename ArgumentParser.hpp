@@ -62,6 +62,8 @@ namespace ArgumentParser
 			for (int i = 0; i < Aliases.size(); i++)
 			{
 				Output += "\"" + Aliases[i] + "\"";
+				if (i != Aliases.size() - 1)
+					Output += ", ";
 			}
 			Output += " ]";
 
@@ -151,6 +153,7 @@ namespace ArgumentParser
 		for (int i = 0; i < ArgumentList.size(); i++)
 		{
 			printf(ArgumentList[i].ToString().c_str());
+			printf("\n");
 		}
 	}
 }
